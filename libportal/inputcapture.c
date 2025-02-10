@@ -237,6 +237,7 @@ typedef struct {
 
 static void create_session (Call *call);
 static void get_zones (Call *call);
+static size_t call_instances = 0;
 
 static void
 call_dispose (Call *call)
@@ -277,6 +278,8 @@ call_last_unref (void *call)
    * wants a GDestroyNotify, and because this is a convenient place to put
    * life-cycle debugging */
   call_dispose (call);
+  call_instances--;
+  g_debug ("Call instances: %zu", call_instances);
 }
 
 static inline void
@@ -296,6 +299,9 @@ call_new (XdpPortal *portal,
           void *callback_data)
 {
   g_autoptr(Call) call = g_rc_box_new0 (Call);
+
+  call_instances++;
+  g_debug ("Call instances: %zu", call_instances);
 
   call->portal = g_object_ref (portal);
 

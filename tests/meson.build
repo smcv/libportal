@@ -17,7 +17,7 @@ if meson.version().version_compare('>= 0.56.0')
 
     test('pytest',
       pytest,
-      args: ['--verbose', '--verbose', '--log-level=DEBUG'],
+      args: ['--verbose', '--verbose', '--log-level=DEBUG', '-s'],
       env: test_env,
       workdir: meson.current_source_dir(),
       timeout: 180,
